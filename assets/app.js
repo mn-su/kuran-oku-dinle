@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.coreAudio.play().then(() => {
             state.isPlaying = true;
             elements.playPauseBtn.textContent = 'Duraklat';
-            elements.playingInfo.innerHTML = `<strong>Haktan Kuran</strong> (${state.currentPage}. Sayfa Oynatılıyor...)`;
+            elements.playingInfo.innerHTML = `<strong>Haktan Kuran</strong> (${state.currentPage}. Sayfa Dinleniyor...)`;
         }).catch(e => {
             console.error(e);
             elements.playingInfo.textContent = 'Sayfa Sesi Bulunamadı';
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.reciter === 'osmansahin') rString = 'Osman Şahin';
             if (state.reciter === 'everyayah') rString = 'M. Alafasy (EveryAyah)';
             
-            elements.playingInfo.innerHTML = `<strong>${rString}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah} Oynatılıyor...)`;
+            elements.playingInfo.innerHTML = `<strong>${rString}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah} Dinleniyor...)`;
         }).catch(handleAudioError);
     }
 
