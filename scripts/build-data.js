@@ -8,10 +8,11 @@ const PAGES_OUT = path.join(DATA_DIR, 'pages.js');
 
 const MUSHAF_PAGES_FILE = path.join(__dirname, 'diyanet-mushaf-pages.ts');
 
+// Cüz başlangıç sayfaları (0-indexli, Fatiha=0)
 const JUZ_PAGES = [
-    1, 22, 42, 62, 82, 102, 122, 142, 162, 182, 
-    202, 222, 242, 262, 282, 302, 322, 342, 362, 382, 
-    402, 422, 442, 462, 482, 502, 522, 542, 562, 582
+    0, 21, 41, 61, 81, 101, 121, 141, 161, 181, 
+    201, 221, 241, 261, 281, 301, 321, 341, 361, 381, 
+    401, 421, 441, 461, 481, 501, 521, 541, 561, 581
 ];
 
 async function main() {
