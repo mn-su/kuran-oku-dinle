@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Arapça Rakam Dönüşümü
                 const arabicNum = ayahObj.ayah.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
-                ayahSpan.innerHTML = `${ayahObj.text} <span class="ayah-end">۝<span class="ayah-num">${arabicNum}</span></span>`;
+                ayahSpan.innerHTML = `${ayahObj.text} <span class="ayah-end"><span class="ayah-num">${arabicNum}</span></span>`;
                 ayahSpan.addEventListener('click', () => {
                     stopAudio();
                     state.currentAyahIndex = index;

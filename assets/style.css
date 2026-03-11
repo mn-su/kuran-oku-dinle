@@ -149,19 +149,25 @@ input[type="number"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    font-size: 36px; /* Simgeyi metinden ayırıp makul boyuta sabitledik */
-    color: var(--primary-color);
-    margin: 0 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid #8B4513;
+    outline: 2px solid #DEB887;
+    outline-offset: -1px;
+    background: rgba(222, 184, 135, 0.15);
+    margin: 0 6px;
     user-select: none;
     vertical-align: middle;
+    flex-shrink: 0;
 }
 
 .ayah-num {
-    position: absolute;
-    font-size: 24px;
+    font-size: 14px;
     font-family: system-ui, -apple-system, sans-serif;
-    color: #2c3e50; /* Mushaf arka planı daima açık, numara daima koyu */
+    font-weight: 700;
+    color: #8B4513;
+    line-height: 1;
 }
 
 /* Zarif Sayfa Üstü Bilgisi (Cüz, Sure, Sayfa) */
@@ -209,9 +215,9 @@ input[type="number"] {
 .bismillah {
     text-align: center;
     font-family: 'DiyanetElif', Arial, sans-serif;
-    font-size: calc(var(--ayah-font-size) * 0.85); /* Ayet metnine göre dinamik ölçek */
+    font-size: calc(var(--ayah-font-size) * 0.85);
     margin: 15px 0 30px 0;
-    color: var(--text-color);
+    color: #2c3e50; /* Mushaf arka planı daima açık, besmele daima koyu */
 }
 
 .surah-header {
