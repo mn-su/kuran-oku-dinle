@@ -497,16 +497,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getReciterUrl(surah, ayah) {
-        // Diyanet APK mobil ses URL formatı: {prefix}{surahNo}_{ayahNo}.mp3
-        // dk = Davut Kaya, fo = Fatih Çollak
+        // Diyanet WebDosya — CORS açık ses sunucusu
+        // Format: https://webdosya.diyanet.gov.tr/kuran/kuranikerim/Sound/{reciterFolder}/{surah}_{ayah}.mp3
+        const WEBDOSYA = 'https://webdosya.diyanet.gov.tr/kuran/kuranikerim/Sound';
         if (state.reciter === 'davutkaya') {
-             return `https://mobil.diyanet.gov.tr/mobile/sesdosyalari/dk${surah}_${ayah}.mp3`;
-        } else if (state.reciter === 'everyayah') {
+             return `${WEBDOSYA}/ar_davutKaya/${surah}_${ayah}.mp3`;
+        } else if (state.reciter === 'osmansahin') {
+             return `${WEBDOSYA}/ar_osmanSahin/${surah}_${ayah}.mp3`;
+        } else {
+             // EveryAyah (Alafasy) — farklı format
              let sStr = surah.toString().padStart(3, '0');
              let aStr = ayah.toString().padStart(3, '0');
              return `https://everyayah.com/data/Alafasy_128kbps/${sStr}${aStr}.mp3`;
-        } else {
-             return `https://mobil.diyanet.gov.tr/mobile/sesdosyalari/fo${surah}_${ayah}.mp3`;
         }
     }
 
@@ -555,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.playPauseBtn.textContent = 'Duraklat';
             
             let rString = 'Davut Kaya';
-            if (state.reciter === 'fatihcollak') rString = 'Fatih Çollak';
+            if (state.reciter === 'osmansahin') rString = 'Osman Şahin';
             if (state.reciter === 'everyayah') rString = 'M. Alafasy (EveryAyah)';
             
             elements.playingInfo.innerHTML = `<strong>${rString}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah} Oynatılıyor...)`;
@@ -570,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleAudioError(e) {
         if (state.isFallbackAttempting) return;
 
-        const reciterNames = { davutkaya: 'Davut Kaya', fatihcollak: 'Fatih Çollak', everyayah: 'M. Alafasy' };
+        const reciterNames = { davutkaya: 'Davut Kaya', osmansahin: 'Osman Şahin', everyayah: 'M. Alafasy' };
         const currentReciterName = reciterNames[state.reciter] || state.reciter;
         console.warn(`Ses yüklenemedi (${currentReciterName}):`, e);
 
