@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Kaydedilmiş font boyutunu uygula
             if (state.fontSize === 'small') document.documentElement.style.setProperty('--ayah-font-size', '54px');
             if (state.fontSize === 'large') document.documentElement.style.setProperty('--ayah-font-size', '82px');
+            if (state.fontSize === 'xlarge') document.documentElement.style.setProperty('--ayah-font-size', '96px');
 
             // Kaydedilmiş mushaf türünü uygula
             if (elements.mushafTypeSelect) elements.mushafTypeSelect.value = state.mushafType;
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let val = '68px';
                 if (state.fontSize === 'small') val = '54px';
                 if (state.fontSize === 'large') val = '82px';
+                if (state.fontSize === 'xlarge') val = '96px';
                 document.documentElement.style.setProperty('--ayah-font-size', val);
             });
         }
