@@ -100,6 +100,18 @@ input[type="number"] {
     text-align: center;
 }
 
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
 .reading-area {
     flex: 1;
     overflow-y: auto;
@@ -326,4 +338,273 @@ input[type="number"] {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+/* Tablet ve küçük ekranlar */
+@media (max-width: 768px) {
+    .topbar {
+        padding: 8px 12px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    .header-content h1 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .controls select {
+        flex: 1;
+        min-width: 0;
+        font-size: 0.8rem;
+        padding: 6px 4px;
+    }
+
+    .page-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .page-nav button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .page-label {
+        font-size: 0.75rem !important;
+    }
+
+    input[type="number"] {
+        width: 48px;
+        padding: 6px 2px;
+        font-size: 0.8rem;
+    }
+
+    .reading-area {
+        padding: 8px;
+    }
+
+    .page {
+        padding: 16px 12px;
+        border-width: 6px;
+        border-radius: 8px;
+        outline-offset: -6px;
+        line-height: 2;
+    }
+
+    .page-top-header {
+        margin-top: -10px;
+        padding: 6px 8px;
+        font-size: 0.85rem;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .arabic-surah-top {
+        font-size: 1.4rem;
+    }
+
+    .latin-surah-top {
+        font-size: 0.9rem;
+    }
+
+    .number-top {
+        font-size: 0.85rem;
+    }
+
+    .surah-header {
+        margin-left: -12px;
+        margin-right: -12px;
+        font-size: calc(var(--ayah-font-size) * 0.8);
+    }
+
+    .ayah-end {
+        width: 28px;
+        height: 28px;
+        margin: 0 4px;
+    }
+
+    .ayah-num {
+        font-size: 12px;
+    }
+
+    .sajda-badge {
+        font-size: 18px;
+    }
+
+    .player-bar {
+        padding: 10px 12px;
+    }
+
+    .audio-controls {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .play {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .playing-info {
+        font-size: 0.8rem;
+    }
+
+    .modal-content {
+        padding: 16px 20px;
+        width: 95%;
+    }
+}
+
+/* Telefonlar (küçük ekran) */
+@media (max-width: 480px) {
+    :root {
+        --ayah-font-size: 42px;
+    }
+
+    .topbar {
+        padding: 6px 8px;
+    }
+
+    .header-content h1 {
+        font-size: 0.9rem;
+    }
+
+    .controls {
+        gap: 4px;
+    }
+
+    .controls select {
+        font-size: 0.75rem;
+        padding: 5px 2px;
+    }
+
+    .page-nav button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
+
+    input[type="number"] {
+        width: 42px;
+        font-size: 0.75rem;
+    }
+
+    .reading-area {
+        padding: 4px;
+    }
+
+    .page {
+        padding: 10px 8px;
+        border-width: 4px;
+        border-radius: 6px;
+        outline-width: 1px;
+        outline-offset: -4px;
+        line-height: 1.9;
+    }
+
+    .page-top-header {
+        margin-top: -6px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
+    }
+
+    .arabic-surah-top {
+        font-size: 1.1rem;
+    }
+
+    .latin-surah-top {
+        font-size: 0.75rem;
+    }
+
+    .surah-header {
+        margin-left: -8px;
+        margin-right: -8px;
+        font-size: calc(var(--ayah-font-size) * 0.75);
+        padding: 6px 0;
+    }
+
+    .bismillah {
+        margin: 8px 0 16px 0;
+    }
+
+    .ayah-end {
+        width: 24px;
+        height: 24px;
+        margin: 0 3px;
+        border-width: 1.5px;
+        outline-width: 1.5px;
+    }
+
+    .ayah-num {
+        font-size: 10px;
+    }
+
+    .sajda-badge {
+        font-size: 15px;
+        margin: 0 2px;
+    }
+
+    .player-bar {
+        padding: 8px 8px;
+    }
+
+    .play {
+        padding: 7px 14px;
+        font-size: 0.8rem;
+        border-radius: 16px;
+    }
+
+    .playing-info {
+        font-size: 0.75rem;
+    }
+
+    #settings-btn {
+        font-size: 1rem !important;
+        padding: 3px !important;
+    }
+}
+
+/* Çok küçük ekranlar */
+@media (max-width: 360px) {
+    :root {
+        --ayah-font-size: 36px;
+    }
+
+    .page {
+        padding: 8px 6px;
+        border-width: 3px;
+        line-height: 1.8;
+    }
+
+    .page-top-header {
+        font-size: 0.65rem;
+    }
+
+    .surah-header {
+        margin-left: -6px;
+        margin-right: -6px;
+    }
+}
+
+/* Mushaf görsel modu: resmi mobile uyumlu yap */
+@media (max-width: 768px) {
+    .page img {
+        max-width: 100%;
+        height: auto;
+    }
 }
