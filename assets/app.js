@@ -497,15 +497,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getReciterUrl(surah, ayah) {
-        let sStr = surah.toString().padStart(3, '0');
-        let aStr = ayah.toString().padStart(3, '0');
-        
+        // Diyanet APK mobil ses URL formatı: {prefix}{surahNo}_{ayahNo}.mp3
+        // dk = Davut Kaya, fo = Fatih Çollak
         if (state.reciter === 'davutkaya') {
-             return `https://kuran.diyanet.gov.tr/SessionFiles/Audio/DavutKaya/${sStr}${aStr}.mp3`;
+             return `https://mobil.diyanet.gov.tr/mobile/sesdosyalari/dk${surah}_${ayah}.mp3`;
         } else if (state.reciter === 'everyayah') {
+             let sStr = surah.toString().padStart(3, '0');
+             let aStr = ayah.toString().padStart(3, '0');
              return `https://everyayah.com/data/Alafasy_128kbps/${sStr}${aStr}.mp3`;
         } else {
-             return `https://kuran.diyanet.gov.tr/SessionFiles/Audio/FatihCollak/${sStr}${aStr}.mp3`;
+             return `https://mobil.diyanet.gov.tr/mobile/sesdosyalari/fo${surah}_${ayah}.mp3`;
         }
     }
 
@@ -567,44 +568,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleAudioError(e) {
-        if (state.isFallbackAttempting) {
-            // Çift tetiklenmeyi (Promise Catch + Error Event) yoksay
-            return;
-        }
+        if (state.isFallbackAttempting) return;
 
-        console.warn("Ses Oynatılamadı (CORS/URL Hatası), Fallback Devreye Girecek", e);
+        const reciterNames = { davutkaya: 'Davut Kaya', fatihcollak: 'Fatih Çollak', everyayah: 'M. Alafasy' };
+        const currentReciterName = reciterNames[state.reciter] || state.reciter;
+        console.warn(`Ses yüklenemedi (${currentReciterName}):`, e);
 
-        // Diyanet sunucuları dış dosya çağrılarını engellerse EveryAyah yedeğini otomatik devreye al
+        // Diyanet URL başarısız olduysa EveryAyah yedeğine geç
         if (elements.coreAudio.src.includes('diyanet.gov.tr')) {
             state.isFallbackAttempting = true;
+            elements.playingInfo.innerHTML = `⚠️ <strong>${currentReciterName}</strong> yüklenemedi, yedek deneniyor...`;
+
             const pageData = state.pagesData[state.currentPage];
             if (pageData && pageData.ayahs[state.currentAyahIndex]) {
                 const ayahObj = pageData.ayahs[state.currentAyahIndex];
                 let sStr = ayahObj.surah.toString().padStart(3, '0');
                 let aStr = ayahObj.ayah.toString().padStart(3, '0');
                 
-                // Güvenilir Global CDN (EveryAyah)
                 const fallbackReciter = state.reciter === 'davutkaya' ? 'Alafasy_128kbps' : 'Husary_64kbps';
-                const fallbackName = state.reciter === 'davutkaya' ? 'M. Alafasy (B Planı)' : 'Husary (B Planı)';
+                const fallbackName = state.reciter === 'davutkaya' ? 'M. Alafasy (Yedek)' : 'Husary (Yedek)';
 
                 elements.coreAudio.src = `https://everyayah.com/data/${fallbackReciter}/${sStr}${aStr}.mp3`;
-                elements.coreAudio.load(); // Hata alan audio objesini sıfırla
+                elements.coreAudio.load();
 
                 setTimeout(() => {
                     elements.coreAudio.play().then(() => {
                         state.isPlaying = true;
                         elements.playPauseBtn.textContent = 'Duraklat';
-                        elements.playingInfo.innerHTML = `<strong>${fallbackName}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah})`;
+                        elements.playingInfo.innerHTML = `⚠️ <strong>${fallbackName}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah})`;
                         
-                        // Yedeğe geçerken vurguyu tekrar yakala
                         document.querySelectorAll('.ayah').forEach(el => el.classList.remove('active'));
                         const activeSpan = document.querySelector(`.ayah[data-index="${state.currentAyahIndex}"]`);
-                        if(activeSpan) {
-                            activeSpan.classList.add('active');
-                        }
+                        if(activeSpan) activeSpan.classList.add('active');
                     }).catch(err => {
-                        console.error("Yedek oynatma hatası:", err);
-                        elements.playingInfo.textContent = 'Otomatik Ses Yedeği Yüklenemedi';
+                        console.error("Yedek de yüklenemedi:", err);
+                        elements.playingInfo.innerHTML = `❌ Hiçbir ses kaynağı yüklenemedi (<strong>${currentReciterName}</strong> + Yedek)`;
                         state.isPlaying = false;
                         elements.playPauseBtn.textContent = 'Başlat';
                     });
@@ -614,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         stopAudio();
-        elements.playingInfo.textContent = 'Bağlantı Hatası (MP3 Bulunamadı)';
+        elements.playingInfo.innerHTML = `❌ <strong>${currentReciterName}</strong> sesi yüklenemedi`;
     }
 
     function pauseAudio() {
