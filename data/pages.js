@@ -867,7 +867,7 @@ window.pagesData = {
   },
   "21": {
     "pageNumber": 21,
-    "juz": 1,
+    "juz": 2,
     "ayahs": [
       {
         "surah": 2,
@@ -1542,7 +1542,7 @@ window.pagesData = {
   },
   "41": {
     "pageNumber": 41,
-    "juz": 2,
+    "juz": 3,
     "ayahs": [
       {
         "surah": 2,
@@ -2287,7 +2287,7 @@ window.pagesData = {
   },
   "61": {
     "pageNumber": 61,
-    "juz": 3,
+    "juz": 4,
     "ayahs": [
       {
         "surah": 3,
@@ -3067,7 +3067,7 @@ window.pagesData = {
   },
   "81": {
     "pageNumber": 81,
-    "juz": 4,
+    "juz": 5,
     "ayahs": [
       {
         "surah": 4,
@@ -3807,7 +3807,7 @@ window.pagesData = {
   },
   "101": {
     "pageNumber": 101,
-    "juz": 5,
+    "juz": 6,
     "ayahs": [
       {
         "surah": 4,
@@ -4482,7 +4482,7 @@ window.pagesData = {
   },
   "121": {
     "pageNumber": 121,
-    "juz": 6,
+    "juz": 7,
     "ayahs": [
       {
         "surah": 5,
@@ -5342,7 +5342,7 @@ window.pagesData = {
   },
   "141": {
     "pageNumber": 141,
-    "juz": 7,
+    "juz": 8,
     "ayahs": [
       {
         "surah": 6,
@@ -6172,7 +6172,7 @@ window.pagesData = {
   },
   "161": {
     "pageNumber": 161,
-    "juz": 8,
+    "juz": 9,
     "ayahs": [
       {
         "surah": 7,
@@ -7087,7 +7087,7 @@ window.pagesData = {
   },
   "181": {
     "pageNumber": 181,
-    "juz": 9,
+    "juz": 10,
     "ayahs": [
       {
         "surah": 8,
@@ -7847,7 +7847,7 @@ window.pagesData = {
   },
   "201": {
     "pageNumber": 201,
-    "juz": 10,
+    "juz": 11,
     "ayahs": [
       {
         "surah": 9,
@@ -8717,7 +8717,7 @@ window.pagesData = {
   },
   "221": {
     "pageNumber": 221,
-    "juz": 11,
+    "juz": 12,
     "ayahs": [
       {
         "surah": 11,
@@ -9687,7 +9687,7 @@ window.pagesData = {
   },
   "241": {
     "pageNumber": 241,
-    "juz": 12,
+    "juz": 13,
     "ayahs": [
       {
         "surah": 12,
@@ -10577,7 +10577,7 @@ window.pagesData = {
   },
   "261": {
     "pageNumber": 261,
-    "juz": 13,
+    "juz": 14,
     "ayahs": [
       {
         "surah": 15,
@@ -11832,7 +11832,7 @@ window.pagesData = {
   },
   "281": {
     "pageNumber": 281,
-    "juz": 14,
+    "juz": 15,
     "ayahs": [
       {
         "surah": 17,
@@ -12877,7 +12877,7 @@ window.pagesData = {
   },
   "301": {
     "pageNumber": 301,
-    "juz": 15,
+    "juz": 16,
     "ayahs": [
       {
         "surah": 18,
@@ -14342,7 +14342,7 @@ window.pagesData = {
   },
   "321": {
     "pageNumber": 321,
-    "juz": 16,
+    "juz": 17,
     "ayahs": [
       {
         "surah": 21,
@@ -15412,7 +15412,7 @@ window.pagesData = {
   },
   "341": {
     "pageNumber": 341,
-    "juz": 17,
+    "juz": 18,
     "ayahs": [
       {
         "surah": 23,
@@ -16542,7 +16542,7 @@ window.pagesData = {
   },
   "361": {
     "pageNumber": 361,
-    "juz": 18,
+    "juz": 19,
     "ayahs": [
       {
         "surah": 25,
@@ -18357,7 +18357,7 @@ window.pagesData = {
   },
   "381": {
     "pageNumber": 381,
-    "juz": 19,
+    "juz": 20,
     "ayahs": [
       {
         "surah": 27,
@@ -19332,7 +19332,7 @@ window.pagesData = {
   },
   "401": {
     "pageNumber": 401,
-    "juz": 20,
+    "juz": 21,
     "ayahs": [
       {
         "surah": 29,
@@ -20342,7 +20342,7 @@ window.pagesData = {
   },
   "421": {
     "pageNumber": 421,
-    "juz": 21,
+    "juz": 22,
     "ayahs": [
       {
         "surah": 33,
@@ -21307,7 +21307,7 @@ window.pagesData = {
   },
   "441": {
     "pageNumber": 441,
-    "juz": 22,
+    "juz": 23,
     "ayahs": [
       {
         "surah": 36,
@@ -23212,7 +23212,7 @@ window.pagesData = {
   },
   "461": {
     "pageNumber": 461,
-    "juz": 23,
+    "juz": 24,
     "ayahs": [
       {
         "surah": 39,
@@ -24207,7 +24207,7 @@ window.pagesData = {
   },
   "481": {
     "pageNumber": 481,
-    "juz": 24,
+    "juz": 25,
     "ayahs": [
       {
         "surah": 41,
@@ -25532,7 +25532,7 @@ window.pagesData = {
   },
   "501": {
     "pageNumber": 501,
-    "juz": 25,
+    "juz": 26,
     "ayahs": [
       {
         "surah": 45,
@@ -26652,7 +26652,7 @@ window.pagesData = {
   },
   "521": {
     "pageNumber": 521,
-    "juz": 26,
+    "juz": 27,
     "ayahs": [
       {
         "surah": 51,
@@ -28767,7 +28767,7 @@ window.pagesData = {
   },
   "541": {
     "pageNumber": 541,
-    "juz": 27,
+    "juz": 28,
     "ayahs": [
       {
         "surah": 58,
@@ -29572,7 +29572,7 @@ window.pagesData = {
   },
   "561": {
     "pageNumber": 561,
-    "juz": 28,
+    "juz": 29,
     "ayahs": [
       {
         "surah": 67,
@@ -31847,7 +31847,7 @@ window.pagesData = {
   },
   "581": {
     "pageNumber": 581,
-    "juz": 29,
+    "juz": 30,
     "ayahs": [
       {
         "surah": 78,
