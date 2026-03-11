@@ -16,10 +16,10 @@
         --text-color: #e2e8f0;
         --primary-color: #48bb78;
         --border-color: #2d3748;
-        --highlight-bg: #2b6cb0;
+        --highlight-bg: #d4edda;
         --topbar-bg: #2d3748;
         --player-bg: #2d3748;
-        --page-bg: #2d3748; /* Karanlık modda arkaplan */
+        /* --page-bg kasıtlı olarak burada yok: Mushaf her zaman açık arkaplan */
     }
 }
 
@@ -112,10 +112,11 @@ input[type="number"] {
 .page {
     width: 100%;
     background: var(--page-bg);
+    color: #2c3e50; /* Mushaf metni her zaman koyu — dark mode'dan bağımsız */
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border: 12px solid #DEB887; /* Altın sarısı Mushaf çerçevesi */
+    border: 12px solid #DEB887;
     outline: 2px solid #8B4513; 
     outline-offset: -12px;
     display: block;
