@@ -1,0 +1,295 @@
+:root {
+    --bg-color: #f7f9fc;
+    --text-color: #2c3e50;
+    --primary-color: #27ae60;
+    --border-color: #e2e8f0;
+    --highlight-bg: #d4edda;
+    --topbar-bg: #ffffff;
+    --player-bg: #ffffff;
+    --page-bg: #fdfae5; /* Hafif sarı Mushaf arkaplanı */
+    --ayah-font-size: 68px; /* Varsayılan Orta Boyut */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a202c;
+        --text-color: #e2e8f0;
+        --primary-color: #48bb78;
+        --border-color: #2d3748;
+        --highlight-bg: #2b6cb0;
+        --topbar-bg: #2d3748;
+        --player-bg: #2d3748;
+        --page-bg: #2d3748; /* Karanlık modda arkaplan */
+    }
+}
+
+@font-face {
+    font-family: 'DiyanetElif';
+    src: url('../fonts/Elif_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.topbar {
+    background-color: var(--topbar-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.header-content {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.header-content h1 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+select, input, button {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+button {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+.reading-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.page {
+    width: 100%;
+    background: var(--page-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 12px solid #DEB887; /* Altın sarısı Mushaf çerçevesi */
+    outline: 2px solid #8B4513; 
+    outline-offset: -12px;
+    display: block;
+    direction: rtl;
+    text-align: justify;
+    text-align-last: center;
+    text-justify: inter-word;
+    line-height: 2.2;
+}
+
+.ayah {
+    display: inline;
+    font-family: 'DiyanetElif', Arial, sans-serif;
+    font-size: var(--ayah-font-size);
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.ayah:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.ayah.active {
+    background-color: var(--highlight-bg);
+}
+
+.ayah-end {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 36px; /* Simgeyi metinden ayırıp makul boyuta sabitledik */
+    color: var(--primary-color);
+    margin: 0 5px;
+    user-select: none;
+    vertical-align: middle;
+}
+
+.ayah-num {
+    position: absolute;
+    font-size: 24px;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--text-color);
+}
+
+/* Zarif Sayfa Üstü Bilgisi (Cüz, Sure, Sayfa) */
+.page-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-top: -30px; /* Paddingin ittiği payı dengeler */
+    margin-bottom: 5px;
+    border-bottom: 2px solid #DEB887;
+    color: #8B4513;
+    font-size: 1.1rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-weight: 500;
+    direction: ltr; /* Sayı ve harflerin RTL modunda ters dönmesini engeller */
+}
+
+.page-top-header .surah-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.arabic-surah-top {
+    font-family: 'DiyanetElif', Arial, sans-serif;
+    font-size: 2.2rem; /* Büyük boyut */
+    color: #8B4513;
+}
+
+.latin-surah-top {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #A0522D; /* Daha hafif bir kahve tonu */
+}
+
+.number-top {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: #D2691E;
+}
+
+.bismillah {
+    text-align: center;
+    font-family: 'DiyanetElif', Arial, sans-serif;
+    font-size: calc(var(--ayah-font-size) * 0.85); /* Ayet metnine göre dinamik ölçek */
+    margin: 15px 0 30px 0;
+    color: var(--text-color);
+}
+
+.surah-header {
+    text-align: center;
+    font-size: var(--ayah-font-size);
+    line-height: 0.8;
+    margin: 10px -40px 10px -40px; /* -40px pulls it to touch the edge of .page padding */
+    padding: 10px 0;
+    background: rgba(222, 184, 135, 0.2);
+    border-top: 1px solid #DEB887;
+    border-bottom: 1px solid #DEB887;
+    color: #8B4513;
+    font-weight: bold;
+}
+
+.player-bar {
+    background-color: var(--player-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.play {
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.playing-info {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.fallback-controls {
+    font-size: 0.9rem;
+}
+
+/* Modal Ayarları */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--topbar-bg);
+    padding: 20px 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

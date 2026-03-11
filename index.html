@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kur'an Okuma Modu</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="header-content">
+            <h1>Kur'an-ı Kerim</h1>
+            <div class="controls">
+                <select id="juz-select">
+                    <option value="">Cüz Seç...</option>
+                </select>
+                <select id="surah-select">
+                    <option value="">Sure Seç...</option>
+                </select>
+                <div class="page-nav">
+                    <button id="prev-btn">« Geri</button>
+                    <label for="page-input" class="page-label" style="font-size: 0.9rem; font-weight: 500;">Sayfa No:</label>
+                    <input type="number" id="page-input" min="0" max="604" value="0">
+                    <button id="next-btn">İleri »</button>
+                </div>
+                <button id="settings-btn" title="Ayarlar" style="font-size: 1.2rem; background: none; color: var(--text-color); padding: 5px;">⚙️</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="reading-area" id="reading-area">
+        <!-- Ayetler JS tarafından buraya doldurulacak -->
+    </main>
+
+    <footer class="player-bar">
+        <div class="audio-controls">
+            <button id="play-pause-btn" class="play">Başlat</button>
+            <div class="playing-info" id="playing-info">
+                Hazır.
+            </div>
+            <!-- Görünmez ana audio elementi -->
+            <audio id="core-audio" preload="auto"></audio>
+        </div>
+    </footer>
+
+    <!-- Ayarlar Modalı -->
+    <div id="settings-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" id="close-settings">&times;</span>
+            <h2 style="margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Ayarlar</h2>
+            
+            <div class="setting-group">
+                <label for="mushaf-type-select">Mushaf Görünümü:</label>
+                <select id="mushaf-type-select" style="width: 100%;">
+                    <option value="text">Diyanet Metin (Font)</option>
+                    <option value="image">Diyanet Görsel (Resim)</option>
+                </select>
+            </div>
+            
+            <div class="setting-group" style="margin-top: 15px;">
+                <label for="font-size-select">Arapça Yazı Boyutu:</label>
+                <select id="font-size-select" style="width: 100%;">
+                    <option value="small">Küçük</option>
+                    <option value="medium" selected>Orta</option>
+                    <option value="large">Büyük</option>
+                </select>
+            </div>
+            
+            <div class="setting-group" style="margin-top: 15px;">
+                <label for="reciter-select">Ayet-Ayet Okuyan:</label>
+                <select id="reciter-select" style="width: 100%;">
+                    <option value="davutkaya">Davut Kaya</option>
+                    <option value="fatihcollak">Fatih Çollak</option>
+                    <option value="everyayah">M. Alafasy (B Planı - EveryAyah)</option>
+                </select>
+            </div>
+
+            <div class="setting-group" style="margin-top: 15px;">
+                <label for="debug-toggle" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="debug-toggle" style="width: 18px; height: 18px;">
+                    Debug Modu (Koordinat Izgarası)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Veri Dosyaları (Local File:// Çalışması İçin JS Formatı) -->
+    <script src="data/surahs.js"></script>
+    <script src="data/pages.js"></script>
+    <script src="data/coordinates.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>
