@@ -170,6 +170,33 @@ input[type="number"] {
     line-height: 1;
 }
 
+/* Secde Ayeti Vurgulama */
+.ayah.secde {
+    background-color: rgba(180, 40, 40, 0.08);
+    border-radius: 6px;
+    padding: 4px 6px;
+}
+
+.sajda-end {
+    border-color: #b42828 !important;
+    outline-color: rgba(180, 40, 40, 0.4) !important;
+    background: rgba(180, 40, 40, 0.1) !important;
+}
+
+.sajda-end .ayah-num {
+    color: #b42828;
+}
+
+.sajda-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 22px;
+    color: #b42828;
+    margin: 0 4px;
+    vertical-align: middle;
+    user-select: none;
+}
+
 /* Zarif Sayfa Üstü Bilgisi (Cüz, Sure, Sayfa) */
 .page-top-header {
     display: flex;

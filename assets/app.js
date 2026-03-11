@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         "سُورَةُ ٱلْفَاتِحَةِ", "سُورَةُ البَقَرَةِ", "سُورَةُ اٰلِ عِمۡرَانَ", "سُورَةُ النِّسَاءِ", "سُورَةُ المَائـِدَةِ", "سُورَةُ الأَنۡعَامِ", "سُورَةُ الأَعۡرَافِ", "سُورَةُ الأَنفَالِ", "سُورَةُ التَّوۡبَةِ", "سُورَةُ يُونُسَ", "سُورَةُ هُودٍ", "سُورَةُ يُوسُفَ", "سُورَةُ الرَّعۡدِ", "سُورَةُ إِبۡرَاهِيمَ", "سُورَةُ الحِجۡرِ", "سُورَةُ النَّحۡلِ", "سُورَةُ الإِسۡرَاءِ", "سُورَةُ الكَهۡفِ", "سُورَةُ مَرۡيَمَ", "سُورَةُ طه", "سُورَةُ الأَنبِيَاءِ", "سُورَةُ الحَجِّ", "سُورَةُ المُؤۡمِنُونَ", "سُورَةُ النُّورِ", "سُورَةُ الفُرۡقَانِ", "سُورَةُ الشُّعَرَاءِ", "سُورَةُ النَّمۡلِ", "سُورَةُ القَصَصِ", "سُورَةُ العَنكَبُوتِ", "سُورَةُ الرُّومِ", "سُورَةُ لُقۡمَانَ", "سُورَةُ السَّجۡدَةِ", "سُورَةُ الأَحۡزَابِ", "سُورَةُ سَبَإٍ", "سُورَةُ فَاطِرٍ", "سُورَةُ يسٓ", "سُورَةُ الصَّافَّاتِ", "سُورَةُ صٓ", "سُورَةُ الزُّمَرِ", "سُورَةُ غَافِرٍ", "سُورَةُ فُصِّلَتۡ", "سُورَةُ الشُّورَىٰ", "سُورَةُ الزُّخۡرُفِ", "سُورَةُ الدُّخَانِ", "سُورَةُ الجَاثِيَةِ", "سُورَةُ الأَحۡقَافِ", "سُورَةُ مُحَمَّدٍ", "سُورَةُ الفَتۡحِ", "سُورَةُ الحُجُرَاتِ", "سُورَةُ قٓ", "سُورَةُ الذَّارِيَاتِ", "سُورَةُ الطُّورِ", "سُورَةُ النَّجۡمِ", "سُورَةُ القَمَرِ", "سُورَةُ الرَّحۡمَٰن", "سُورَةُ الوَاقِعَةِ", "سُورَةُ الحَدِيدِ", "سُورَةُ المُجَادلَةِ", "سُورَةُ الحَشۡرِ", "سُورَةُ المُمۡتَحنَةِ", "سُورَةُ الصَّفِّ", "سُورَةُ الجُمُعَةِ", "سُورَةُ المُنافِقُونَ", "سُورَةُ التَّغَابُنِ", "سُورَةُ الطَّلَاقِ", "سُورَةُ التَّحۡرِيمِ", "سُورَةُ المُلۡكِ", "سُورَةُ القَلَمِ", "سُورَةُ الحَاقَّةِ", "سُورَةُ المَعَارِجِ", "سُورَةُ نُوحٍ", "سُورَةُ الجِنِّ", "سُورَةُ المُزَّمِّلِ", "سُورَةُ المُدَّثِّرِ", "سُورَةُ القِيَامَةِ", "سُورَةُ الإِنسَانِ", "سُورَةُ المُرۡسَلَاتِ", "سُورَةُ النَّبَإِ", "سُورَةُ النَّازِعَاتِ", "سُورَةُ عَبَسَ", "سُورَةُ التَّكۡوِيرِ", "سُورَةُ الانفِطَارِ", "سُورَةُ المُطَفِّفِينَ", "سُورَةُ الانشِقَاقِ", "سُورَةُ البُرُوجِ", "سُورَةُ الطَّارِقِ", "سُورَةُ الأَعۡلَىٰ", "سُورَةُ الغَاشِيَةِ", "سُورَةُ الفَجۡرِ", "سُورَةُ البَلَدِ", "سُورَةُ الشَّمۡسِ", "سُورَةُ اللَّيۡلِ", "سُورَةُ الضُّحَىٰ", "سُورَةُ الشَّرۡحِ", "سُورَةُ التِّينِ", "سُورَةُ العَلَقِ", "سُورَةُ القَدۡرِ", "سُورَةُ البَيِّنَةِ", "سُورَةُ الزَّلۡزَلَةِ", "سُورَةُ العَادِيَاتِ", "سُورَةُ القَارِعَةِ", "سُورَةُ التَّكَاثُرِ", "سُورَةُ العَصۡرِ", "سُورَةُ الهُمَزَةِ", "سُورَةُ الفِيلِ", "سُورَةُ قُرَيۡشٍ", "سُورَةُ المَاعُونِ", "سُورَةُ الكَوۡثَرِ", "سُورَةُ الكَافِرُونَ", "سُورَةُ النَّصۡرِ", "سُورَةُ المَسَدِ", "سُورَةُ الإِخۡلَاصِ", "سُورَةُ الفَلَقِ", "سُورَةُ النَّاسِ"
     ];
 
+    // Secde Ayetleri (14 adet)
+    const SAJDA_AYAHS = [
+        {surah: 7, ayah: 206}, {surah: 13, ayah: 15}, {surah: 16, ayah: 50},
+        {surah: 17, ayah: 109}, {surah: 19, ayah: 58}, {surah: 22, ayah: 18},
+        {surah: 25, ayah: 60}, {surah: 27, ayah: 26}, {surah: 32, ayah: 15},
+        {surah: 38, ayah: 24}, {surah: 41, ayah: 38}, {surah: 53, ayah: 62},
+        {surah: 84, ayah: 21}, {surah: 96, ayah: 19}
+    ];
+
     function init() {
         try {
             state.surahsData = window.surahsData || {};
@@ -115,14 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cüz veya Sure Seçimi (Gezinme)
         elements.juzSelect.addEventListener('change', (e) => {
             const juz = parseInt(e.target.value);
-            const pageStr = Object.keys(state.pagesData).find(p => state.pagesData[p].juz === juz);
-            if (pageStr) loadPage(parseInt(pageStr));
+            // Sayfa numaralarını sayısal sırala, ilk eşleşeni al
+            const sortedPages = Object.keys(state.pagesData).map(Number).sort((a, b) => a - b);
+            const targetPage = sortedPages.find(p => state.pagesData[p].juz === juz);
+            if (targetPage !== undefined) loadPage(targetPage);
         });
 
         elements.surahSelect.addEventListener('change', (e) => {
             const surah = parseInt(e.target.value);
-            const pageStr = Object.keys(state.pagesData).find(p => state.pagesData[p].ayahs && state.pagesData[p].ayahs.length && state.pagesData[p].ayahs[0].surah === surah);
-            if (pageStr) loadPage(parseInt(pageStr));
+            // Sayfadaki TÜM ayetleri kontrol et (sure sayfa ortasında başlayabilir)
+            const sortedPages = Object.keys(state.pagesData).map(Number).sort((a, b) => a - b);
+            const targetPage = sortedPages.find(p => {
+                const pd = state.pagesData[p];
+                return pd.ayahs && pd.ayahs.some(a => a.surah === surah);
+            });
+            if (targetPage !== undefined) loadPage(targetPage);
         });
 
         elements.coreAudio.addEventListener('ended', handleAudioEnded);
@@ -464,12 +480,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 ayahSpan.dataset.index = index;
                 ayahSpan.dataset.surah = ayahObj.surah;
                 ayahSpan.dataset.ayah = ayahObj.ayah;
-                
-                // Tıklayınca o ayetten başlat
-                // Arapça Rakam Dönüşümü
-                const arabicNum = ayahObj.ayah.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
 
-                ayahSpan.innerHTML = `${ayahObj.text} <span class="ayah-end"><span class="ayah-num">${arabicNum}</span></span>`;
+                // Secde ayeti kontrolü
+                const isSajda = SAJDA_AYAHS.some(s => s.surah === ayahObj.surah && s.ayah === ayahObj.ayah);
+                if (isSajda) ayahSpan.classList.add('secde');
+                
+                const arabicNum = ayahObj.ayah.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+                const sajdaBadge = isSajda ? '<span class="sajda-badge">۩</span>' : '';
+
+                ayahSpan.innerHTML = `${ayahObj.text} <span class="ayah-end${isSajda ? ' sajda-end' : ''}"><span class="ayah-num">${arabicNum}</span></span>${sajdaBadge}`;
                 ayahSpan.addEventListener('click', () => {
                     stopAudio();
                     state.currentAyahIndex = index;
