@@ -261,15 +261,16 @@ input[type="number"] {
 
 .surah-header {
     text-align: center;
-    font-size: var(--ayah-font-size);
+    font-size: calc(var(--ayah-font-size) * 0.75);
     line-height: 0.8;
-    margin: 10px -40px 10px -40px; /* -40px pulls it to touch the edge of .page padding */
-    padding: 10px 0;
+    margin: 10px -40px 10px -40px;
+    padding: 12px 0;
     background: rgba(222, 184, 135, 0.2);
     border-top: 1px solid #DEB887;
     border-bottom: 1px solid #DEB887;
     color: #8B4513;
-    font-weight: bold;
+    font-weight: normal;
+    letter-spacing: 2px;
 }
 
 .player-bar {
