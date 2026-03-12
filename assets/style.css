@@ -48,13 +48,22 @@ body {
 }
 
 .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background-color: var(--topbar-bg);
     border-bottom: 1px solid var(--border-color);
     padding: 10px 20px;
     padding-top: calc(10px + env(safe-area-inset-top));
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    z-index: 10;
-    flex-shrink: 0;
+    z-index: 100;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.topbar.ui-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
 .header-content {
@@ -116,12 +125,23 @@ input[type="number"] {
 }
 
 .reading-area {
-    flex: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow-y: auto;
-    padding: 20px;
+    padding: 80px 20px 100px 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    transition: padding 0.3s ease;
+    touch-action: manipulation; /* Çift tıklama gecikmesini ve zoomu engellemek için */
+}
+
+body.ui-hidden .reading-area {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .page {
@@ -277,6 +297,10 @@ input[type="number"] {
 }
 
 .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: var(--player-bg);
     border-top: 1px solid var(--border-color);
     padding: 15px 20px;
@@ -284,14 +308,29 @@ input[type="number"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
-    flex-shrink: 0;
+    z-index: 100;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.player-bar.ui-hidden {
+    transform: translateY(100%);
+    opacity: 0;
 }
 
 .audio-controls {
     display: flex;
     align-items: center;
     gap: 15px;
+}
+.usage-note {
+    margin-top: 25px;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary-color);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #666;
+    border-radius: 4px;
 }
 
 .play {

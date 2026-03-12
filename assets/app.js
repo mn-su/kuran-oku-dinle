@@ -30,7 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
         reciter: localStorage.getItem('reciter') || 'davutkaya',
         fontSize: localStorage.getItem('fontSize') || 'medium',
         isFallbackAttempting: false,
-        debugMode: localStorage.getItem('debugMode') === 'true'
+        debugMode: localStorage.getItem('debugMode') === 'true',
+        uiVisible: true,
+        clickTimer: null,
+        lastClickTime: 0,
+        retryCount: 0, 
+        audioCache: {}, // { url: { audio, addedAt } }
+        isManualTrigger: false,
+        loadTimeout: null 
     };
 
     // Sabit Veriler
@@ -145,6 +152,48 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.coreAudio.addEventListener('ended', handleAudioEnded);
         elements.coreAudio.addEventListener('error', handleAudioError);
 
+        // UI ve Oynatma Kontrolü (Odak Modu)
+        elements.readingArea.addEventListener('click', (e) => {
+            const now = Date.now();
+            const ayahElement = e.target.closest('.ayah');
+            const imgWrapper = e.target.closest('.mushaf-img-wrapper'); // Resim modu için wrapper
+            
+            // Eğer tıklanan bir buton, select veya input değilse devam et
+            if (e.target.closest('button') || e.target.closest('select') || e.target.closest('input')) return;
+
+            // ÇİFT TIKLAMA / TAP KONTROLÜ (Ayet üzerinde ise)
+            if ((ayahElement || imgWrapper) && state.lastClickTime && (now - state.lastClickTime < 300)) {
+                // Çift tıklama algılandı
+                if (state.clickTimer) {
+                    clearTimeout(state.clickTimer);
+                    state.clickTimer = null;
+                }
+                
+                if (ayahElement) {
+                    const index = parseInt(ayahElement.dataset.index);
+                    state.isManualTrigger = true; // MANUEL BAŞLATILDI
+                    stopAudio();
+                    state.currentAyahIndex = index;
+                    playAyah(index);
+                } else if (imgWrapper) {
+                    state.isManualTrigger = true; // MANUEL BAŞLATILDI
+                    handleImageDoubleClick(e, imgWrapper);
+                }
+                
+                state.lastClickTime = 0; // Sıfırla
+                return;
+            }
+
+            state.lastClickTime = now;
+
+            // TEK TIKLAMA KONTROLÜ (UI Toggle)
+            if (state.clickTimer) clearTimeout(state.clickTimer);
+            state.clickTimer = setTimeout(() => {
+                toggleUI();
+                state.clickTimer = null;
+            }, 300);
+        });
+
         // Ayarlar Modal Events
         elements.settingsBtn.addEventListener('click', () => {
             elements.mushafTypeSelect.value = state.mushafType;
@@ -232,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pageContainer.style.padding = '0';
             
             const imgWrapper = document.createElement('div');
+            imgWrapper.className = 'mushaf-img-wrapper'; // TESPİT İÇİN CLASS EKLEDİK
             imgWrapper.style.position = 'relative';
             imgWrapper.style.width = '100%';
             imgWrapper.style.cursor = 'pointer';
@@ -385,53 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgWrapper.addEventListener('mouseleave', () => { tracker.style.display = 'none'; });
             } // debugMode sonu
 
-            // --- TIKLAMA MANTIĞI ---
-            imgWrapper.addEventListener('click', (e) => {
-                // img'nin gerçek ekran rect'ini kullanıyoruz
-                const imgRect = img.getBoundingClientRect();
-
-                const imgY = e.clientY - imgRect.top;
-                const imgX = e.clientX - imgRect.left;
-
-                // Klik görsel dışındaysa yoksay
-                if (imgY < 0 || imgX < 0 || imgY > imgRect.height || imgX > imgRect.width) return;
-
-                // KRİTİK: JSON koordinatları 944x984 referans uzayında -> buna göre dönüştür
-                const COORD_REF_W = 944;
-                const COORD_REF_H = 984;
-                // X ve Y eksenlerinde ~40 birim kayma düzeltmesi (bkz. debug grid)
-                const COORD_OFFSET_X = -40;
-                const COORD_OFFSET_Y = -40;
-                const mappedY = (imgY / imgRect.height) * COORD_REF_H - COORD_OFFSET_Y;
-                const mappedX = (imgX / imgRect.width) * COORD_REF_W - COORD_OFFSET_X;
-
-                let clickedAyahIndex = -1;
-                let minDistance = Infinity;
-
-                pageData.ayahs.forEach((a, index) => {
-                    const cList = (state.coordsData || []).filter(c => c.surahNo === a.surah && c.ayahNo === a.ayah);
-                    cList.forEach(c => {
-                        const top = Math.min(c.startY, c.endY) - 30;
-                        const bottom = Math.max(c.startY, c.endY) + 30;
-
-                        if (mappedY >= top && mappedY <= bottom) {
-                            const dist = Math.abs(mappedY - ((c.startY + c.endY) / 2));
-                            if (dist < minDistance) {
-                                minDistance = dist;
-                                clickedAyahIndex = index;
-                            }
-                        }
-                    });
-                });
-
-                if (clickedAyahIndex !== -1) {
-                    stopAudio();
-                    state.currentAyahIndex = clickedAyahIndex;
-                    playAyah(clickedAyahIndex);
-                } else {
-                    console.warn(`Ayet bulunamadı. MappedY=${Math.round(mappedY)}`);
-                }
-            });
+            // --- TIKLAMA MANTIĞI readingArea event delegation ile handle ediliyor ---
 
             pageContainer.appendChild(imgWrapper);
         } else {
@@ -491,11 +495,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sajdaBadge = isSajda ? '<span class="sajda-badge">۩</span>' : '';
 
                 ayahSpan.innerHTML = `${ayahObj.text} <span class="ayah-end${isSajda ? ' sajda-end' : ''}"><span class="ayah-num">${arabicNum}</span></span>${sajdaBadge}`;
-                ayahSpan.addEventListener('click', () => {
-                    stopAudio();
-                    state.currentAyahIndex = index;
-                    playAyah(index);
-                });
+                
+                // --- TIKLAMA MANTIĞI readingArea event delegation ile handle ediliyor ---
 
                 pageContainer.appendChild(ayahSpan);
             });
@@ -513,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pauseAudio();
         } else {
             if (state.currentAyahIndex === -1) state.currentAyahIndex = 0;
+            state.isManualTrigger = true; // BUTONLA BAŞLATMA DA MANUELDİR
             playAyah(state.currentAyahIndex);
         }
     }
@@ -549,12 +551,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function playAyah(index) {
-        state.isFallbackAttempting = false; // Yeni ayet oynatmada hatayı sıfırla
+        state.isFallbackAttempting = false;
         const pageData = state.pagesData[state.currentPage];
         if (!pageData || !pageData.ayahs[index]) {
-            // Sayfa bitti, sonrakine geç
             navigatePage(1);
-            state.currentAyahIndex = 0;
             setTimeout(() => playAyah(0), 1000);
             return;
         }
@@ -571,10 +571,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const url = getReciterUrl(ayahObj.surah, ayahObj.ayah);
-        elements.coreAudio.src = url;
         
+        // KRİTİK: Eğer çalınacak ayet zaten pre-cache'de ise, o isteği iptal etmeliyiz.
+        // Çünkü tarayıcı aynı URL için bekleyen bir istek varken yenisini başlatmayıp bekleyebilir (lockup).
+        if (state.audioCache[url]) {
+            state.audioCache[url].audio.pause();
+            state.audioCache[url].audio.src = "";
+            delete state.audioCache[url];
+        }
+
+        state.retryCount = 0; 
+        state.isPlaying = true; // Oynatma niyetini hemen belirt (Timeout kontrolü için)
+        elements.coreAudio.src = url;
+        elements.coreAudio.load();
+
+        // PENDING ZAMAN AŞIMI (TIMEOUT) - BAŞLANGIÇ
+        if (state.loadTimeout) clearTimeout(state.loadTimeout);
+        state.loadTimeout = setTimeout(() => {
+            if (state.isPlaying && elements.coreAudio.readyState < 2) {
+                console.warn("Audio pending timeout reached (3s). Aborting...");
+                const timedOutUrl = elements.coreAudio.src; // URL'i sakla
+                elements.coreAudio.pause();
+                elements.coreAudio.src = ""; // Bağlantıyı zorla kopar
+                handleAudioError(new Error("AudioTimeout"), timedOutUrl);
+            }
+        }, 3000);
+        
+        // SIRT SIRTA HAZIRLIK: Sıradaki 5 ayeti HEMEN hazırla (play sonucunu bekleme)
+        preloadNextAyahs(index + 1);
+
         elements.coreAudio.play().then(() => {
-            state.isPlaying = true;
+            if (state.loadTimeout) {
+                clearTimeout(state.loadTimeout);
+                state.loadTimeout = null;
+            }
+            state.retryCount = 0; 
+            state.isManualTrigger = false; 
             elements.playPauseBtn.textContent = 'Duraklat';
             
             let rString = 'Davut Kaya';
@@ -582,7 +614,58 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.reciter === 'everyayah') rString = 'M. Alafasy (EveryAyah)';
             
             elements.playingInfo.innerHTML = `<strong>${rString}</strong> (${SURAH_NAMES[ayahObj.surah - 1]} ${ayahObj.ayah} Dinleniyor...)`;
-        }).catch(handleAudioError);
+        }).catch(e => {
+            if (e.name !== 'AbortError') {
+                const failedUrl = elements.coreAudio.src;
+                handleAudioError(e, failedUrl);
+            }
+        });
+    }
+
+    function preloadNextAyahs(startIndex) {
+        const pageData = state.pagesData[state.currentPage];
+        if (!pageData) return;
+
+        const now = Date.now();
+        const windowSize = 3; // Diyanet için 5 çok fazla yük bindiriyor, 3'e düşürdük
+        const activeRange = [];
+        // Mevcut ayet + Sonraki 5 ayeti koruma altına alıyoruz (1+5)
+        for (let i = startIndex - 1; i < startIndex + windowSize; i++) {
+            if (pageData.ayahs[i]) {
+                activeRange.push(getReciterUrl(pageData.ayahs[i].surah, pageData.ayahs[i].ayah));
+            }
+        }
+
+        // SLIDING WINDOW TEMİZLİĞİ: Menzil dışındakileri ve stuck olanları agresif temizle
+        const cacheUrls = Object.keys(state.audioCache);
+        cacheUrls.forEach(url => {
+            const entry = state.audioCache[url];
+            const isOutside = !activeRange.includes(url);
+            // TEMİZLİK: 15 saniyeden uzun süredir PENDING (stuck) olan cache'leri temizle
+            // Arka plan yüklemelerine daha fazla şans veriyoruz (15sn).
+            const isStuck = entry.audio.readyState < 2 && (now - entry.addedAt > 15000);
+
+            if (isOutside || isStuck) {
+                entry.audio.pause();
+                entry.audio.src = "";
+                delete state.audioCache[url];
+            }
+        });
+
+        // PENCEREYİ DOLDUR VE BAŞLAT
+        activeRange.forEach((url, i) => {
+            if (!state.audioCache[url]) {
+                // İstekleri hafifçe kademelendirerek (stagger) tarayıcıyı boğmamak
+                setTimeout(() => {
+                    // Hala menzil içindeyse ve asıl çalan bu değilse yükle
+                    if (!activeRange.includes(url) || elements.coreAudio.src === url) return; 
+                    const audio = new Audio(url);
+                    audio.preload = 'auto';
+                    audio.load(); 
+                    state.audioCache[url] = { audio, addedAt: Date.now() };
+                }, (i + 1) * 250); // 250ms stagger
+            }
+        });
     }
 
     function handleAudioEnded() {
@@ -590,15 +673,64 @@ document.addEventListener('DOMContentLoaded', () => {
         playAyah(state.currentAyahIndex + 1);
     }
 
-    function handleAudioError(e) {
+    function handleAudioError(e, customUrl = null) {
+        if (state.loadTimeout) {
+            clearTimeout(state.loadTimeout);
+            state.loadTimeout = null;
+        }
         if (state.isFallbackAttempting) return;
 
+        const faultyUrl = customUrl || elements.coreAudio.src;
         const reciterNames = { davutkaya: 'Davut Kaya', osmansahin: 'Osman Şahin', everyayah: 'M. Alafasy' };
         const currentReciterName = reciterNames[state.reciter] || state.reciter;
+        
+        // MANUEL TIKLAMADA RETRY YAPMA, DİREKT FALLBACK'E GEÇ
+        if (state.isManualTrigger) {
+            console.log("Manuel başlatma başarısız, direkt yedek sese geçiliyor.");
+            state.isManualTrigger = false; // Tüketildi
+            // Retry logic'ini atla, aşağıya fallback kısmına düşecek
+        } else {
+            // OTOMATİK İLERLEMEDE YENİDEN DENEME MANTIĞI (Retry)
+            if (state.retryCount < 1 && elements.coreAudio.src.includes('diyanet.gov.tr')) {
+                state.retryCount++;
+                elements.playingInfo.innerHTML = `⚠️ <strong>${currentReciterName}</strong> bağlantısı zayıf, tekrar deneniyor (${state.retryCount}/1)...`;
+                
+                setTimeout(() => {
+                    if (state.isPlaying) { 
+                        elements.coreAudio.load();
+                        
+                        // RETRY İÇİN DE TIMEOUT KURGULAYALIM
+                        if (state.loadTimeout) clearTimeout(state.loadTimeout);
+                        state.loadTimeout = setTimeout(() => {
+                            if (state.isPlaying && elements.coreAudio.readyState < 2) {
+                                console.warn("Retry timeout reached. Fallback starting...");
+                                const rUrl = elements.coreAudio.src;
+                                elements.coreAudio.pause();
+                                elements.coreAudio.src = "";
+                                handleAudioError(new Error("RetryTimeout"), rUrl);
+                            }
+                        }, 3000);
+
+                        elements.coreAudio.play().then(() => {
+                            if (state.loadTimeout) {
+                                clearTimeout(state.loadTimeout);
+                                state.loadTimeout = null;
+                            }
+                        }).catch(err => handleAudioError(err, elements.coreAudio.src));
+                    }
+                }, 2000); 
+                return;
+            }
+        }
+
         console.warn(`Ses yüklenemedi (${currentReciterName}):`, e);
 
+        // Hatalı kaynağı temizle (Ghost request önleme)
+        elements.coreAudio.pause();
+        elements.coreAudio.src = "";
+
         // Diyanet URL başarısız olduysa EveryAyah yedeğine geç
-        if (elements.coreAudio.src.includes('diyanet.gov.tr')) {
+        if (faultyUrl.includes('diyanet.gov.tr')) {
             state.isFallbackAttempting = true;
             elements.playingInfo.innerHTML = `⚠️ <strong>${currentReciterName}</strong> yüklenemedi, yedek deneniyor...`;
 
@@ -636,6 +768,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         stopAudio();
         elements.playingInfo.innerHTML = `❌ <strong>${currentReciterName}</strong> sesi yüklenemedi`;
+    }
+    function handleImageDoubleClick(e, imgWrapper) {
+        const img = imgWrapper.querySelector('img');
+        const imgRect = img.getBoundingClientRect();
+        const imgY = e.clientY - imgRect.top;
+        const imgX = e.clientX - imgRect.left;
+
+        if (imgY < 0 || imgX < 0 || imgY > imgRect.height || imgX > imgRect.width) return;
+
+        const COORD_REF_W = 944;
+        const COORD_REF_H = 984;
+        const COORD_OFFSET_X = -40;
+        const COORD_OFFSET_Y = -40;
+        const mappedY = (imgY / imgRect.height) * COORD_REF_H - COORD_OFFSET_Y;
+
+        const pageData = state.pagesData[state.currentPage];
+        if (!pageData) return;
+
+        let clickedAyahIndex = -1;
+        let minDistance = Infinity;
+
+        pageData.ayahs.forEach((a, index) => {
+            const cList = (state.coordsData || []).filter(c => c.surahNo === a.surah && c.ayahNo === a.ayah);
+            cList.forEach(c => {
+                const top = Math.min(c.startY, c.endY) - 30;
+                const bottom = Math.max(c.startY, c.endY) + 30;
+
+                if (mappedY >= top && mappedY <= bottom) {
+                    const dist = Math.abs(mappedY - ((c.startY + c.endY) / 2));
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        clickedAyahIndex = index;
+                    }
+                }
+            });
+        });
+
+        if (clickedAyahIndex !== -1) {
+            state.isManualTrigger = true; // MANUEL BAŞLATILDI
+            stopAudio();
+            state.currentAyahIndex = clickedAyahIndex;
+            playAyah(clickedAyahIndex);
+        }
+    }
+
+    function toggleUI() {
+        state.uiVisible = !state.uiVisible;
+        const topbar = document.querySelector('.topbar');
+        const playerbar = document.querySelector('.player-bar');
+        
+        if (state.uiVisible) {
+            topbar.classList.remove('ui-hidden');
+            playerbar.classList.remove('ui-hidden');
+            document.body.classList.remove('ui-hidden');
+        } else {
+            topbar.classList.add('ui-hidden');
+            playerbar.classList.add('ui-hidden');
+            document.body.classList.add('ui-hidden');
+        }
     }
 
     function pauseAudio() {
