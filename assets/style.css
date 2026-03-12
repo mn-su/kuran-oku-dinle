@@ -42,7 +42,8 @@ body {
     color: var(--text-color);
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Dynamic Viewport Height */
     overflow: hidden;
 }
 
@@ -50,8 +51,10 @@ body {
     background-color: var(--topbar-bg);
     border-bottom: 1px solid var(--border-color);
     padding: 10px 20px;
+    padding-top: calc(10px + env(safe-area-inset-top));
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     z-index: 10;
+    flex-shrink: 0;
 }
 
 .header-content {
@@ -277,10 +280,12 @@ input[type="number"] {
     background-color: var(--player-bg);
     border-top: 1px solid var(--border-color);
     padding: 15px 20px;
+    padding-bottom: calc(15px + env(safe-area-inset-bottom));
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
+    flex-shrink: 0;
 }
 
 .audio-controls {
